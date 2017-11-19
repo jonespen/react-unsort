@@ -1,0 +1,46 @@
+{
+  "name": "react-unsort",
+  "version": "1.0.0-1",
+  "description": "Render props for sorting things in React",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "babel src -d dist",
+    "storybook": "start-storybook -p 9001 -c .storybook",
+    "test": "jest",
+    "flow": "flow",
+    "prepublish": "npm run build"
+  },
+  "author": "Jon Espen Kvisler",
+  "license": "ISC",
+  "dependencies": {},
+  "peerDependencies": {
+    "react": ">=15"
+  },
+  "devDependencies": {
+    "@storybook/react": "^3.2.16",
+    "babel-cli": "^6.26.0",
+    "babel-core": "^6.26.0",
+    "babel-jest": "^21.2.0",
+    "babel-plugin-transform-flow-strip-types": "^6.22.0",
+    "babel-preset-env": "^1.6.1",
+    "babel-preset-react": "^6.24.1",
+    "enzyme": "^3.2.0",
+    "enzyme-adapter-react-16": "^1.1.0",
+    "enzyme-to-json": "^3.2.2",
+    "flow-bin": "^0.59.0",
+    "jest": "^21.2.1",
+    "prettier": "^1.8.2",
+    "raf": "^3.4.0",
+    "react": "^16.1.1",
+    "react-dom": "^16.1.1",
+    "react-test-renderer": "^16.1.1"
+  },
+  "jest": {
+    "setupFiles": [
+      "./test-setup.js"
+    ],
+    "snapshotSerializers": [
+      "enzyme-to-json/serializer"
+    ]
+  }
+}
