@@ -1,6 +1,6 @@
 {
   "name": "react-unsort",
-  "version": "1.0.0-3",
+  "version": "1.0.0-4",
   "description": "Render props for sorting things in React",
   "main": "dist/index.js",
   "scripts": {
@@ -39,10 +39,16 @@
     "react-test-renderer": "^16.1.1"
   },
   "jest": {
-    "setupFiles": ["./test-setup.js"],
-    "snapshotSerializers": ["enzyme-to-json/serializer"]
+    "setupFiles": [
+      "./test-setup.js"
+    ],
+    "snapshotSerializers": [
+      "enzyme-to-json/serializer"
+    ]
   },
-  "files": ["dist"],
+  "files": [
+    "dist"
+  ],
   "repository": {
     "type": "git",
     "url": "https://github.com/jonespen/react-unsort.git"
