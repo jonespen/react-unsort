@@ -1,6 +1,6 @@
 {
   "name": "react-unsort",
-  "version": "1.0.0-4",
+  "version": "1.0.0-5",
   "description": "Render props for sorting things in React",
   "main": "dist/index.js",
   "scripts": {
