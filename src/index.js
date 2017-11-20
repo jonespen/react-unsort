@@ -27,8 +27,6 @@ type Props = {
 
 type State = {};
 
-const callAll = (...fns) => (...args) => fns.forEach(fn => fn && fn(...args));
-
 const ariaSortMap = {
   asc: "ascending",
   desc: "descending"
