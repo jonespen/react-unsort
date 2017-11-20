@@ -10,6 +10,7 @@
     "storybook": "start-storybook -p 9001 -c .storybook",
     "test": "jest",
     "flow": "flow",
+    "lint": "eslint .",
     "prepublishOnly": "npm run test && npm run flow && npm run build"
   },
   "author": "Jon Espen Kvisler <jonespen@gmail.com>",
@@ -22,6 +23,7 @@
     "@storybook/react": "^3.2.16",
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.0",
+    "babel-eslint": "^8.0.2",
     "babel-jest": "^21.2.0",
     "babel-plugin-transform-flow-strip-types": "^6.22.0",
     "babel-preset-env": "^1.6.1",
@@ -29,6 +31,10 @@
     "enzyme": "^3.2.0",
     "enzyme-adapter-react-16": "^1.1.0",
     "enzyme-to-json": "^3.2.2",
+    "eslint": "^4.11.0",
+    "eslint-config-prettier": "^2.8.0",
+    "eslint-plugin-flowtype": "^2.39.1",
+    "eslint-plugin-react": "^7.5.1",
     "flow-bin": "^0.59.0",
     "flow-copy-source": "^1.2.1",
     "jest": "^21.2.1",
@@ -39,16 +45,10 @@
     "react-test-renderer": "^16.1.1"
   },
   "jest": {
-    "setupFiles": [
-      "./test-setup.js"
-    ],
-    "snapshotSerializers": [
-      "enzyme-to-json/serializer"
-    ]
+    "setupFiles": ["./test-setup.js"],
+    "snapshotSerializers": ["enzyme-to-json/serializer"]
   },
-  "files": [
-    "dist"
-  ],
+  "files": ["dist"],
   "repository": {
     "type": "git",
     "url": "https://github.com/jonespen/react-unsort.git"
@@ -56,5 +56,18 @@
   "bugs": {
     "url": "https://github.com/jonespen/react-unsort/issues"
   },
-  "homepage": "https://github.com/jonespen/react-unsort#readme"
+  "homepage": "https://github.com/jonespen/react-unsort#readme",
+  "eslintConfig": {
+    "env": {
+      "browser": true
+    },
+    "extends": [
+      "eslint:recommended",
+      "plugin:react/recommended",
+      "plugin:flowtype/recommended",
+      "prettier"
+    ],
+    "plugins": ["flowtype", "react"]
+  },
+  "eslintIgnore": ["flow-typed", "dist"]
 }

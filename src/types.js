@@ -3,7 +3,8 @@
 import { type Node as ReactNode } from "react";
 
 export type SortDirection = "asc" | "desc";
-export type AriaSortDirection = "ascending" | "descending";
+
+type AriaSortDirection = "ascending" | "descending";
 
 export type SortProps = {|
   role: "button",

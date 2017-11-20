@@ -8,8 +8,7 @@ import type {
   RenderProps,
 
   // private types
-  State,
-  AriaSortDirection
+  State
 } from "./types";
 
 export const ariaSortMap = {
@@ -30,7 +29,7 @@ class Unsort extends React.Component<Props, State> {
   };
 
   getSortProps = (key: string) => {
-    const { onSort, sortBy } = this.props;
+    const { onSort } = this.props;
     const direction = this.getSortDirectionFor(key);
     const sortProps: SortProps = {
       role: "button",

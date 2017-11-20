@@ -1,8 +1,11 @@
 // @flow
 
+/* eslint-env jest */
+/* eslint-disable react/display-name */
+
 import * as React from "react";
 import renderer from "react-test-renderer";
-import { shallow, render, mount } from "enzyme";
+import { mount } from "enzyme";
 
 import Unsort, { ariaSortMap } from "./src";
 
