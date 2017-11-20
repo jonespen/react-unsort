@@ -11,6 +11,7 @@
     "test": "jest",
     "flow": "flow",
     "lint": "eslint .",
+    "precommit": "lint-staged",
     "prepublishOnly": "npm run test && npm run flow && npm run build"
   },
   "author": "Jon Espen Kvisler <jonespen@gmail.com>",
@@ -69,5 +70,13 @@
     ],
     "plugins": ["flowtype", "react"]
   },
-  "eslintIgnore": ["flow-typed", "dist"]
+  "eslintIgnore": ["flow-typed", "dist"],
+  "lint-staged": {
+    "*.js": [
+      "prettier --write",
+      "eslint",
+      "git add",
+      "jest --bail --findRelatedTests"
+    ]
+  }
 }
