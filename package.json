@@ -10,7 +10,7 @@
     "flow": "flow",
     "prepublish": "npm run build"
   },
-  "author": "Jon Espen Kvisler",
+  "author": "Jon Espen Kvisler <jonespen@gmail.com>",
   "license": "ISC",
   "dependencies": {},
   "peerDependencies": {
@@ -36,11 +36,15 @@
     "react-test-renderer": "^16.1.1"
   },
   "jest": {
-    "setupFiles": [
-      "./test-setup.js"
-    ],
-    "snapshotSerializers": [
-      "enzyme-to-json/serializer"
-    ]
-  }
+    "setupFiles": ["./test-setup.js"],
+    "snapshotSerializers": ["enzyme-to-json/serializer"]
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jonespen/react-unsort.git"
+  },
+  "bugs": {
+    "url": "https://github.com/jonespen/react-unsort/issues"
+  },
+  "homepage": "https://github.com/jonespen/react-unsort#readme"
 }
