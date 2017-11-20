@@ -1,31 +1,16 @@
 // @flow
 
 import * as React from "react";
+import type {
+  Props,
+  SortDirection,
+  SortProps,
+  RenderProps,
 
-type SortDirection = "asc" | "desc";
-type AriaSortDirection = "ascending" | "descending";
-
-type SortProps = {|
-  role: "button",
-  tabIndex: 0,
-  "aria-sort"?: AriaSortDirection,
-  direction?: SortDirection,
-  onClick: (event: SyntheticMouseEvent<*>) => void,
-  onKeyUp: (event: SyntheticKeyboardEvent<*>) => void
-|};
-
-type RenderProps = {
-  getSortDirectionFor: (key: string) => ?SortDirection,
-  getSortProps: (key: string) => SortProps
-};
-
-type Props = {
-  render: RenderProps => React.Node,
-  sortBy?: { key: string, direction: SortDirection },
-  onSort: (key: string) => void
-};
-
-type State = {};
+  // private types
+  State,
+  AriaSortDirection
+} from "./types";
 
 const ariaSortMap = {
   asc: "ascending",
@@ -77,3 +62,4 @@ class Unsort extends React.Component<Props, State> {
 }
 
 export default Unsort;
+export type { Props, SortDirection, SortProps, RenderProps };
