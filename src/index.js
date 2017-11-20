@@ -12,7 +12,7 @@ import type {
   AriaSortDirection
 } from "./types";
 
-const ariaSortMap = {
+export const ariaSortMap = {
   asc: "ascending",
   desc: "descending"
 };
@@ -24,7 +24,7 @@ class Unsort extends React.Component<Props, State> {
 
   getSortDirectionFor = (key: string): ?SortDirection => {
     const { sortBy } = this.props;
-    if (sortBy && sortBy.key == key) {
+    if (sortBy && sortBy.key === key) {
       return sortBy.direction;
     }
   };

@@ -4,10 +4,14 @@ import * as React from "react";
 import renderer from "react-test-renderer";
 import { shallow, render, mount } from "enzyme";
 
-import Unsort from "./src";
+import Unsort, { ariaSortMap } from "./src";
 
 test("exist", () => {
   expect(typeof Unsort).toBe("function");
+});
+
+test("export ariaSortMap", () => {
+  expect(ariaSortMap).toBeDefined();
 });
 
 test("render prop renders content", () => {

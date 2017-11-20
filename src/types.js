@@ -21,7 +21,7 @@ export type RenderProps = {
 
 export type Props = {
   render: RenderProps => ReactNode,
-  sortBy?: { key: string, direction: SortDirection },
+  sortBy?: ?{ key: string, direction: SortDirection },
   onSort: (key: string) => void
 };
 
