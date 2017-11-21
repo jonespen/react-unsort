@@ -30,16 +30,16 @@ Todo: fill out this with props and stuff
 ```js
 <Unsort
   {...props}
-  render={({ getSortProps, getSortDirectionFor }) => {
+  render={({ getSortProps, sortKey, sortDirection }) => {
     return (
       <table>
         <thead>
           <tr>
             <th {...getSortProps("name")}>
-              Name <span>{getSortDirectionFor("name")}</span>
+              Name <span>{sortKey === "name" && sortDirection}</span>
             </th>
             <th {...getSortProps("age")}>
-              Age <span>{getSortDirectionFor("age")}</span>
+              Age <span>{sortKey === "age" && sortDirection}</span>
             </th>
             <th>Country (not sortable)</th>
           </tr>
@@ -58,8 +58,23 @@ Todo: fill out this with props and stuff
       </table>
     );
   }}
-/>;
+/>
 ```
+
+## Props
+
+### `render:(RenderProps) => React.Node`
+This is where you render whatever you want to based on the state of react-unsort.
+
+Gets the following props:
+```
+getSortProps: (key: string) => SortProps
+sortKey: ?string
+sortDirection: ?SortDirection
+```
+
+### `onSort:({ sortKey: ?string, sortDirection: "asc" | "desc" | null }) => void`
+Called when the element with `getSortProps` applied is clicked or enter key is pressed.
 
 ## Motivation
 

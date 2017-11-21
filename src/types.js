@@ -10,20 +10,22 @@ export type SortProps = {|
   role: "button",
   tabIndex: 0,
   "aria-sort"?: AriaSortDirection,
-  direction?: SortDirection,
   onClick: (event: SyntheticMouseEvent<*>) => void,
   onKeyUp: (event: SyntheticKeyboardEvent<*>) => void
 |};
 
-export type RenderProps = {
-  getSortDirectionFor: (key: string) => ?SortDirection,
+export type RenderProps = State & {
   getSortProps: (key: string) => SortProps
 };
 
 export type Props = {
   render: RenderProps => ReactNode,
-  sortBy?: ?{ key: string, direction: SortDirection },
-  onSort: (key: string) => void
+  initialSortKey?: string,
+  initialSortDirection?: SortDirection,
+  onSort: State => void
 };
 
-export type State = {};
+export type State = {
+  sortKey: ?string,
+  sortDirection: ?SortDirection
+};

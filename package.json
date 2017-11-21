@@ -8,7 +8,7 @@
     "build:babel": "babel src -d dist",
     "build:flow": "flow-copy-source -v src dist",
     "storybook": "start-storybook -p 9001 -c .storybook",
-    "test": "jest src",
+    "test": "jest",
     "test:coverage": "jest --coverage",
     "flow": "flow",
     "lint": "eslint .",

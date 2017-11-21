@@ -2,9 +2,16 @@
 
 import * as React from "react";
 import { storiesOf, action } from "@storybook/react";
-import Unsort from "../src";
+import Unsort, { type RenderProps } from "../src";
 
-const rows = [
+export type Row = {
+  id: string,
+  name: string,
+  age: number,
+  country: string
+};
+
+export const initialRows = [
   {
     id: "ola",
     name: "Ola",
@@ -19,20 +26,20 @@ const rows = [
   }
 ];
 
-function Table({ rows, ...props }) {
+export function Table({ rows, ...props }: { rows: Row[] }) {
   return (
     <Unsort
       {...props}
-      render={({ getSortProps, getSortDirectionFor }) => {
+      render={({ getSortProps, sortKey, sortDirection }) => {
         return (
           <table>
             <thead>
               <tr>
                 <th {...getSortProps("name")}>
-                  Name <span>{getSortDirectionFor("name")}</span>
+                  Name <span>{sortKey === "name" && sortDirection}</span>
                 </th>
                 <th {...getSortProps("age")}>
-                  Age <span>{getSortDirectionFor("age")}</span>
+                  Age <span>{sortKey === "age" && sortDirection}</span>
                 </th>
                 <th>Country (not sortable)</th>
               </tr>
@@ -56,11 +63,12 @@ function Table({ rows, ...props }) {
 }
 
 storiesOf("Table", module)
-  .add("basic", () => <Table rows={rows} onSort={action("onSort")} />)
+  .add("basic", () => <Table rows={initialRows} onSort={action("onSort")} />)
   .add("sorted", () => (
     <Table
-      rows={rows}
+      rows={initialRows}
       onSort={action("onSort")}
-      sortBy={{ key: "name", direction: "asc" }}
+      initialSortKey="name"
+      initialSortDirection="asc"
     />
   ));
