@@ -1,6 +1,6 @@
 {
   "name": "react-unsort",
-  "version": "1.0.0-5",
+  "version": "1.0.0",
   "description": "Render props for sorting things in React",
   "main": "dist/index.js",
   "scripts": {
@@ -8,8 +8,8 @@
     "build:babel": "babel src -d dist",
     "build:flow": "flow-copy-source -v src dist",
     "storybook": "start-storybook -p 9001 -c .storybook",
-    "test": "jest src",
-    "test:coverage": "jest --coverage",
+    "test": "jest",
+    "coverage": "codecov",
     "flow": "flow",
     "lint": "eslint .",
     "precommit": "lint-staged",
@@ -30,6 +30,7 @@
     "babel-plugin-transform-flow-strip-types": "^6.22.0",
     "babel-preset-env": "^1.6.1",
     "babel-preset-react": "^6.24.1",
+    "codecov": "^3.0.0",
     "enzyme": "^3.2.0",
     "enzyme-adapter-react-16": "^1.1.0",
     "enzyme-to-json": "^3.2.2",
@@ -44,13 +45,12 @@
     "raf": "^3.4.0",
     "react": "^16.1.1",
     "react-dom": "^16.1.1",
-    "react-test-renderer": "^16.1.1"
+    "react-test-renderer": "^16.1.1",
+    "styled-components": "^2.2.3"
   },
-  "jest": {
-    "setupFiles": ["./test-setup.js"],
-    "snapshotSerializers": ["enzyme-to-json/serializer"]
-  },
-  "files": ["dist"],
+  "files": [
+    "dist"
+  ],
   "repository": {
     "type": "git",
     "url": "https://github.com/jonespen/react-unsort.git"
@@ -59,6 +59,16 @@
     "url": "https://github.com/jonespen/react-unsort/issues"
   },
   "homepage": "https://github.com/jonespen/react-unsort#readme",
+  "jest": {
+    "setupFiles": [
+      "./test-setup.js"
+    ],
+    "snapshotSerializers": [
+      "enzyme-to-json/serializer"
+    ],
+    "coverageDirectory": "./coverage/",
+    "collectCoverage": true
+  },
   "eslintConfig": {
     "env": {
       "browser": true
@@ -69,9 +79,16 @@
       "plugin:flowtype/recommended",
       "prettier"
     ],
-    "plugins": ["flowtype", "react"]
+    "plugins": [
+      "flowtype",
+      "react"
+    ]
   },
-  "eslintIgnore": ["flow-typed", "dist"],
+  "eslintIgnore": [
+    "flow-typed",
+    "dist",
+    "coverage"
+  ],
   "lint-staged": {
     "*.js": [
       "prettier --write",

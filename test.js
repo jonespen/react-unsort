@@ -30,7 +30,8 @@ describe("getSortProps", () => {
   beforeEach(() => {
     getSortProps = setup({
       onSort: mockOnSort,
-      sortBy: { key: "foo", direction: "asc" }
+      initialSortKey: "foo",
+      initialSortDirection: "asc"
     }).getSortProps;
   });
   afterEach(() => {
@@ -39,22 +40,38 @@ describe("getSortProps", () => {
   test("sets tabIndex", () => {
     expect(getSortProps("foo").tabIndex).toBe(0);
   });
-  test("passes down direction, can be used for styling", () => {
-    expect(getSortProps("foo").direction).toBe("asc");
-  });
   test("onClick triggers onSort", () => {
     const fakeEvent = { target: null };
     const { onClick } = getSortProps("foo");
     onClick(fakeEvent);
     expect(mockOnSort).toHaveBeenCalledTimes(1);
-    expect(mockOnSort).toHaveBeenCalledWith("foo");
+    expect(mockOnSort).toHaveBeenCalledWith({
+      sortKey: "foo",
+      sortDirection: "desc"
+    });
   });
   test("onKeyUp triggers onSort if Enter have been pressed", () => {
-    const fakeEvent = { target: null, key: "Enter" };
+    const fakeEvent = { target: null, keyCode: 13 };
     const { onKeyUp } = getSortProps("foo");
     onKeyUp(fakeEvent);
     expect(mockOnSort).toHaveBeenCalledTimes(1);
-    expect(mockOnSort).toHaveBeenCalledWith("foo");
+    expect(mockOnSort).toHaveBeenCalledWith({
+      sortKey: "foo",
+      sortDirection: "desc"
+    });
+  });
+  test("onSort sets sortDirection in the right order", () => {
+    const fakeEvent = { target: null };
+    const { onClick } = getSortProps("foo");
+    onClick(fakeEvent);
+    onClick(fakeEvent);
+    onClick(fakeEvent);
+    expect(mockOnSort).toHaveBeenCalledTimes(3);
+    expect(mockOnSort.mock.calls).toEqual([
+      [{ sortKey: "foo", sortDirection: "desc" }],
+      [{ sortKey: null, sortDirection: null }],
+      [{ sortKey: "foo", sortDirection: "asc" }]
+    ]);
   });
   describe("aria-sort", () => {
     test("sets aria-sort if key is sorted", () => {
@@ -66,14 +83,64 @@ describe("getSortProps", () => {
   });
 });
 
-// $FlowFixMe: not sure how to type this
-function setup({ render = () => <div />, ...props } = {}) {
+test("onClick should go to next sortDirection", () => {
+  const { getSortProps, renderSpy } = setup({
+    initialSortKey: "foo",
+    initialSortDirection: "asc"
+  });
+  const { onClick } = getSortProps("foo");
+  onClick();
+  expect(renderSpy).toHaveBeenLastCalledWith(
+    expect.objectContaining({ sortDirection: "desc" })
+  );
+  onClick();
+  expect(renderSpy).toHaveBeenLastCalledWith(
+    expect.objectContaining({ sortDirection: null, sortKey: null })
+  );
+  onClick();
+  expect(renderSpy).toHaveBeenLastCalledWith(
+    expect.objectContaining({ sortDirection: "asc", sortKey: "foo" })
+  );
+});
+
+test("change sort key should reset sort direction", () => {
+  const { getSortProps, renderSpy } = setup({
+    initialSortKey: "foo",
+    initialSortDirection: "asc"
+  });
+  const { onClick } = getSortProps("bar");
+  onClick();
+  expect(renderSpy).toHaveBeenLastCalledWith(
+    expect.objectContaining({ sortDirection: "asc", sortKey: "bar" })
+  );
+});
+
+test("sortKey is inherited from initialSortKey", () => {
+  const { sortKey } = setup({
+    onSort: jest.fn(),
+    initialSortKey: "foo"
+  });
+  expect(sortKey).toBe("foo");
+});
+
+test("sortDirection is inherited from initialSortDirection", () => {
+  const { sortDirection } = setup({
+    onSort: jest.fn(),
+    initialSortDirection: "asc"
+  });
+  expect(sortDirection).toBe("asc");
+});
+
+function setup(
+  { render = () => <div />, onSort = jest.fn(), ...props }: any = {}
+) {
   let renderArg;
   const renderSpy = jest.fn(controllerArg => {
     renderArg = controllerArg;
-    // $FlowFixMe: not sure how to type this
     return render(controllerArg);
   });
-  const wrapper = mount(<Unsort {...props} render={renderSpy} />);
+  const wrapper = mount(
+    <Unsort onSort={onSort} {...props} render={renderSpy} />
+  );
   return { renderSpy, wrapper, ...renderArg };
 }

@@ -2,6 +2,14 @@
 
 Render prop component for accessible sorting.
 
+[![Build Status][build-badge]][build]
+[![Coverage][coverage-badge]][coverage]
+
+[build-badge]: https://img.shields.io/travis/jonespen/react-unsort/master.svg?style=flat-square
+[build]: https://travis-ci.org/jonespen/react-unsort
+[coverage-badge]: https://img.shields.io/codecov/c/github/jonespen/react-unsort.svg?style=flat-square
+[coverage]: https://codecov.io/github/jonespen/react-unsort
+
 ## The problem
 
 You want to sort something in react (e.g. a list or some table rows), and have
@@ -11,8 +19,7 @@ full control over styling.
 
 This follows the patterns in [downshift](https://github.com/paypal/downshift) to
 expose an API that renders nothing and simply encapsulates the logic of a
-sorting component. Note that it doesn't do any actual sorting, thats entirely up
-to you.
+sorting component. Note that it doesn't do any actual sorting, only setup aria, keyboard handling and handle sort directons for you.
 
 ## Installation
 
@@ -30,16 +37,16 @@ Todo: fill out this with props and stuff
 ```js
 <Unsort
   {...props}
-  render={({ getSortProps, getSortDirectionFor }) => {
+  render={({ getSortProps, sortKey, sortDirection }) => {
     return (
       <table>
         <thead>
           <tr>
             <th {...getSortProps("name")}>
-              Name <span>{getSortDirectionFor("name")}</span>
+              Name <span>{sortKey === "name" && sortDirection}</span>
             </th>
             <th {...getSortProps("age")}>
-              Age <span>{getSortDirectionFor("age")}</span>
+              Age <span>{sortKey === "age" && sortDirection}</span>
             </th>
             <th>Country (not sortable)</th>
           </tr>
@@ -58,8 +65,23 @@ Todo: fill out this with props and stuff
       </table>
     );
   }}
-/>;
+/>
 ```
+
+## Props
+
+### `render:(RenderProps) => React.Node`
+This is where you render whatever you want to based on the state of react-unsort.
+
+Gets the following props:
+```
+getSortProps: (key: string) => SortProps
+sortKey: ?string
+sortDirection: ?SortDirection
+```
+
+### `onSort:({ sortKey: ?string, sortDirection: "asc" | "desc" | null }) => void`
+Called when the element with `getSortProps` applied is clicked or enter key is pressed.
 
 ## Motivation
 
