@@ -132,11 +132,7 @@ test("sortDirection is inherited from initialSortDirection", () => {
 });
 
 function setup(
-  {
-    render = (renderArgs: any) => <div />,
-    onSort = jest.fn(),
-    ...props
-  }: any = {}
+  { render = () => <div />, onSort = jest.fn(), ...props }: any = {}
 ) {
   let renderArg;
   const renderSpy = jest.fn(controllerArg => {
