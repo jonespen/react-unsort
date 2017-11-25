@@ -12,6 +12,7 @@
     "coverage": "codecov",
     "flow": "flow",
     "lint": "eslint .",
+    "deploy-storybook": "storybook-to-ghpages",
     "precommit": "lint-staged",
     "prepublishOnly": "npm run test && npm run flow && npm run build"
   },
@@ -23,6 +24,7 @@
   },
   "devDependencies": {
     "@storybook/react": "^3.2.16",
+    "@storybook/storybook-deployer": "^2.0.0",
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.0",
     "babel-eslint": "^8.0.2",
@@ -48,9 +50,7 @@
     "react-test-renderer": "^16.1.1",
     "styled-components": "^2.2.3"
   },
-  "files": [
-    "dist"
-  ],
+  "files": ["dist"],
   "repository": {
     "type": "git",
     "url": "https://github.com/jonespen/react-unsort.git"
@@ -60,12 +60,8 @@
   },
   "homepage": "https://github.com/jonespen/react-unsort#readme",
   "jest": {
-    "setupFiles": [
-      "./test-setup.js"
-    ],
-    "snapshotSerializers": [
-      "enzyme-to-json/serializer"
-    ],
+    "setupFiles": ["./test-setup.js"],
+    "snapshotSerializers": ["enzyme-to-json/serializer"],
     "coverageDirectory": "./coverage/",
     "collectCoverage": true
   },
@@ -79,16 +75,9 @@
       "plugin:flowtype/recommended",
       "prettier"
     ],
-    "plugins": [
-      "flowtype",
-      "react"
-    ]
+    "plugins": ["flowtype", "react"]
   },
-  "eslintIgnore": [
-    "flow-typed",
-    "dist",
-    "coverage"
-  ],
+  "eslintIgnore": ["flow-typed", "dist", "coverage"],
   "lint-staged": {
     "*.js": [
       "prettier --write",
