@@ -30,7 +30,7 @@ class WithSorting extends React.Component<Props, State> {
 
     const rows = this.state.rows.sort(compare(sortKey));
 
-    if (sortDirection === "desc") {
+    if (sortDirection === "descending") {
       rows.reverse();
     }
 

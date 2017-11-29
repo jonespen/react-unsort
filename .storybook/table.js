@@ -30,16 +30,26 @@ export function Table({ rows, ...props }: { rows: Row[] }) {
   return (
     <Unsort
       {...props}
-      render={({ getSortProps, sortKey, sortDirection }) => {
+      render={({
+        getTableProps,
+        getSortProps,
+        getSortButtonProps,
+        sortKey,
+        sortDirection
+      }) => {
         return (
-          <table>
+          <table {...getTableProps()}>
             <thead>
               <tr>
                 <th {...getSortProps("name")}>
-                  Name <span>{sortKey === "name" && sortDirection}</span>
+                  <span {...getSortButtonProps("name")}>
+                    Name {sortKey === "name" && sortDirection}
+                  </span>
                 </th>
                 <th {...getSortProps("age")}>
-                  Age <span>{sortKey === "age" && sortDirection}</span>
+                  <span {...getSortButtonProps("age")}>
+                    Age {sortKey === "age" && sortDirection}
+                  </span>
                 </th>
                 <th>Country (not sortable)</th>
               </tr>
@@ -69,6 +79,6 @@ storiesOf("Table", module)
       rows={initialRows}
       onSort={action("onSort")}
       initialSortKey="name"
-      initialSortDirection="asc"
+      initialSortDirection="ascending"
     />
   ));
