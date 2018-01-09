@@ -79,4 +79,4 @@ export default class Unsort extends React.Component<Props, State> {
   }
 }
 
-export type { Props, SortDirection, SortProps, RenderProps };
+export type { Props, SortDirection, SortProps, RenderProps, OnSortProps };
