@@ -6,7 +6,8 @@ import type {
   State,
   SortDirection,
   SortProps,
-  RenderProps
+  RenderProps,
+  OnSortProps
 } from "./types";
 
 export const ariaSortMap = {

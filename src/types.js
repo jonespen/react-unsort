@@ -18,11 +18,13 @@ export type RenderProps = State & {
   getSortProps: (key: string) => SortProps
 };
 
+export type OnSortProps = State;
+
 export type Props = {
   render: RenderProps => ReactNode,
   initialSortKey?: string,
   initialSortDirection?: SortDirection,
-  onSort: State => void
+  onSort: OnSortProps => void
 };
 
 export type State = {
