@@ -1,6 +1,6 @@
 {
   "name": "react-unsort",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Render props for sorting things in React",
   "main": "dist/index.js",
   "scripts": {
@@ -50,7 +50,9 @@
     "react-test-renderer": "^16.1.1",
     "styled-components": "^2.2.3"
   },
-  "files": ["dist"],
+  "files": [
+    "dist"
+  ],
   "repository": {
     "type": "git",
     "url": "https://github.com/jonespen/react-unsort.git"
@@ -60,8 +62,12 @@
   },
   "homepage": "https://github.com/jonespen/react-unsort#readme",
   "jest": {
-    "setupFiles": ["./test-setup.js"],
-    "snapshotSerializers": ["enzyme-to-json/serializer"],
+    "setupFiles": [
+      "./test-setup.js"
+    ],
+    "snapshotSerializers": [
+      "enzyme-to-json/serializer"
+    ],
     "coverageDirectory": "./coverage/",
     "collectCoverage": true
   },
@@ -75,9 +81,16 @@
       "plugin:flowtype/recommended",
       "prettier"
     ],
-    "plugins": ["flowtype", "react"]
+    "plugins": [
+      "flowtype",
+      "react"
+    ]
   },
-  "eslintIgnore": ["flow-typed", "dist", "coverage"],
+  "eslintIgnore": [
+    "flow-typed",
+    "dist",
+    "coverage"
+  ],
   "lint-staged": {
     "*.js": [
       "prettier --write",
