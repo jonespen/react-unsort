@@ -10,18 +10,12 @@ import type {
   OnSortProps
 } from "./types";
 
-export const ariaSortMap = {
-  asc: "ascending",
-  desc: "descending"
-};
-
-const sortDirections = [...Object.keys(ariaSortMap), null];
-
 export default class Unsort extends React.Component<Props, State> {
   props: Props;
 
   static defaultProps = {
-    onSort: () => {}
+    onSort: () => {},
+    sortDirections: ["none", "ascending", "descending"]
   };
 
   constructor(props: Props) {
@@ -33,47 +27,65 @@ export default class Unsort extends React.Component<Props, State> {
     };
   }
 
-  getSortDirection = (key: string): ?SortDirection => {
+  getNextSortDirection = (key: string): ?SortDirection => {
+    const { sortDirections } = this.props;
+    const { sortDirection } = this.state;
+    if (!sortDirection) {
+      return sortDirections[1];
+    }
     // if sortKey is changed or not set, return default sortDirections
     if (this.state.sortKey !== key) {
-      return sortDirections[0];
+      return sortDirections[1];
     }
-    const sortDirectionIndex = sortDirections.indexOf(this.state.sortDirection);
+    const sortDirectionIndex = sortDirections.indexOf(sortDirection);
     return sortDirections[(sortDirectionIndex + 1) % sortDirections.length];
   };
 
   handleSortChange = (key: string) => {
-    const sortDirection = this.getSortDirection(key);
+    const sortDirection = this.getNextSortDirection(key);
     const sortKey = sortDirection === null ? null : key;
     const newState = { sortKey, sortDirection };
     this.props.onSort(newState);
     this.setState(newState);
   };
 
-  getSortProps = (key: string): SortProps => {
+  getSortDirection = (key: string): SortDirection => {
+    const { sortDirections } = this.props;
     const { sortKey, sortDirection } = this.state;
+    return key === sortKey && sortDirection ? sortDirection : sortDirections[0];
+  };
 
-    const sortProps: SortProps = {
+  getSortProps = (key: string): SortProps => {
+    return {
+      ["aria-sort"]: this.getSortDirection(key)
+    };
+  };
+
+  getTableProps = () => {
+    return { role: "grid" };
+  };
+
+  getSortButtonProps = (key: string) => {
+    return {
       role: "button",
       tabIndex: 0,
       onClick: () => this.handleSortChange(key),
-      onKeyUp: event => {
+      onKeyUp: (event: SyntheticKeyboardEvent<*>) => {
         // 13 = enter keyCode
         if (event.keyCode === 13) {
           this.handleSortChange(key);
         }
-      }
+      },
+      direction: this.getSortDirection(key)
     };
-    if (key === sortKey && sortDirection) {
-      sortProps["aria-sort"] = ariaSortMap[sortDirection];
-    }
-    return sortProps;
   };
 
   render() {
     const renderProps: RenderProps = {
       ...this.state,
-      getSortProps: this.getSortProps
+      getSortProps: this.getSortProps,
+      getTableProps: this.getTableProps,
+      getSortButtonProps: this.getSortButtonProps
     };
     return this.props.render(renderProps);
   }

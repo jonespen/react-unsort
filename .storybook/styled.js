@@ -12,27 +12,35 @@ const Table = styled.table`
 `;
 const Tr = styled.tr``;
 const Td = styled.td`
-  padding: 0.75rem;
+  padding: ${props => (props.sortable ? 0 : "0.75rem")};
   border-top: 1px solid #eee;
 `;
 const Th = Td.extend`
   text-align: left;
-  &:focus,
-  &:hover {
-    cursor: ${props => (props.sortable ? "pointer" : "default")};
-    background-color: ${props => (props.sortable ? "#ffc" : "inherit")};
-  }
 `.withComponent("th");
 
 function getSortDirection(props) {
-  if (props.direction && props.visible) {
-    return props.direction === "asc" ? "↓" : "↑";
+  switch (props.direction) {
+    case "ascending":
+      return "↓";
+    case "descending":
+      return "↑";
+    default:
+      return "↓↑";
   }
 }
+
 const Sort = styled.span`
+  display: block;
+  padding: 0.75rem;
+  &:focus,
+  &:hover {
+    cursor: pointer;
+    background-color: #ffc;
+  }
   &::after {
     content: "${getSortDirection}";
-    width: .25rem;
+    width: .75rem;
     font-size: .75rem;
     color: #666;
     display: inline-block;
@@ -43,23 +51,22 @@ function StyledTable({ rows, ...props }: { rows: Row[] }) {
   return (
     <Unsort
       {...props}
-      render={({ getSortProps, sortKey, sortDirection }) => {
+      render={({
+        getTableProps,
+        getSortProps,
+        getSortButtonProps,
+        sortKey,
+        sortDirection
+      }) => {
         return (
-          <Table>
+          <Table {...getTableProps()}>
             <thead>
               <Tr>
                 <Th sortable {...getSortProps("name")}>
-                  Name
-                  <Sort
-                    visible={sortKey === "name"}
-                    direction={sortDirection}
-                  />
+                  <Sort {...getSortButtonProps("name")}>Name</Sort>
                 </Th>
                 <Th sortable {...getSortProps("age")}>
-                  Age<Sort
-                    visible={sortKey === "age"}
-                    direction={sortDirection}
-                  />
+                  <Sort {...getSortButtonProps("age")}>Age</Sort>
                 </Th>
                 <Th>Country (not sortable)</Th>
               </Tr>
@@ -91,6 +98,6 @@ storiesOf("With styled-components", module)
       rows={initialRows}
       onSort={action("onSort")}
       initialSortKey="name"
-      initialSortDirection="asc"
+      initialSortDirection="ascending"
     />
   ));

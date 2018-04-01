@@ -2,26 +2,32 @@
 
 import { type Node as ReactNode } from "react";
 
-export type SortDirection = "asc" | "desc";
+export type SortDirection = "ascending" | "descending" | "none" | "other";
 
-type AriaSortDirection = "ascending" | "descending";
-
-export type SortProps = {|
-  role: "button",
-  tabIndex: 0,
-  "aria-sort"?: AriaSortDirection,
-  onClick: (event: SyntheticMouseEvent<*>) => void,
-  onKeyUp: (event: SyntheticKeyboardEvent<*>) => void
-|};
+export type SortProps = {
+  "aria-sort": SortDirection
+};
 
 export type RenderProps = State & {
-  getSortProps: (key: string) => SortProps
+  getSortProps: (key: string) => SortProps,
+  getTableProps: () => {|
+    role: "grid"
+  |},
+  getSortButtonProps: (
+    key: string
+  ) => {
+    role: "button",
+    tabIndex: 0,
+    onClick: (event: SyntheticMouseEvent<*>) => void,
+    onKeyUp: (event: SyntheticKeyboardEvent<*>) => void
+  }
 };
 
 export type OnSortProps = State;
 
 export type Props = {
   render: RenderProps => ReactNode,
+  sortDirections: Array<SortDirection>,
   initialSortKey?: string,
   initialSortDirection?: SortDirection,
   onSort: OnSortProps => void
